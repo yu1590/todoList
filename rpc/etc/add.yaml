@@ -1,0 +1,11 @@
+Name: add.rpc
+ListenOn: 0.0.0.0:8080
+Etcd:
+  Hosts:
+  - 127.0.0.1:2379
+  Key: add.rpc
+DataSource: root:yuyingjie123@tcp(localhost:3306)/todoList?parseTime=true
+# mysql链接地址，满足 $user:$password@tcp($ip:$port)/$db?$queries 格式即可
+Table: todoList
+Cache:
+  - Host: localhost:6379
