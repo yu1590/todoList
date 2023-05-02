@@ -4,10 +4,10 @@ import (
 	"flag"
 	"fmt"
 
-	"example.com/m/v2/rpc/add"
-	"example.com/m/v2/rpc/internal/config"
-	"example.com/m/v2/rpc/internal/server"
-	"example.com/m/v2/rpc/internal/svc"
+	"example.com/m/v2/todoList/internal/config"
+	"example.com/m/v2/todoList/internal/server"
+	"example.com/m/v2/todoList/internal/svc"
+	"example.com/m/v2/todoList/todoList"
 
 	"github.com/zeromicro/go-zero/core/conf"
 	"github.com/zeromicro/go-zero/core/service"
@@ -16,7 +16,7 @@ import (
 	"google.golang.org/grpc/reflection"
 )
 
-var configFile = flag.String("f", "etc/add.yaml", "the config file")
+var configFile = flag.String("f", "etc/todolist.yaml", "the config file")
 
 func main() {
 	flag.Parse()
@@ -26,7 +26,7 @@ func main() {
 	ctx := svc.NewServiceContext(c)
 
 	s := zrpc.MustNewServer(c.RpcServerConf, func(grpcServer *grpc.Server) {
-		add.RegisterAdderServer(grpcServer, server.NewAdderServer(ctx))
+		todoList.RegisterAdderServer(grpcServer, server.NewAdderServer(ctx))
 
 		if c.Mode == service.DevMode || c.Mode == service.TestMode {
 			reflection.Register(grpcServer)

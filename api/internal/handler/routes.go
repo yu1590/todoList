@@ -14,13 +14,13 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 		[]rest.Route{
 			{
 				Method:  http.MethodGet,
-				Path:    "/add",
-				Handler: AddHandler(serverCtx),
+				Path:    "/getTodoList",
+				Handler: GetTodoListHandler(serverCtx),
 			},
 			{
-				Method:  http.MethodGet,
-				Path:    "/check",
-				Handler: CheckHandler(serverCtx),
+				Method:  http.MethodPost,
+				Path:    "/saveTodoList",
+				Handler: SaveTodoListHandler(serverCtx),
 			},
 		},
 	)

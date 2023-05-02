@@ -3,6 +3,8 @@ module example.com/m/v2
 go 1.19
 
 require (
+	github.com/jinzhu/copier v0.3.5
+	github.com/jmoiron/sqlx v1.3.5
 	github.com/zeromicro/go-zero v1.5.2
 	google.golang.org/grpc v1.54.0
 	google.golang.org/protobuf v1.30.0
@@ -36,7 +38,6 @@ require (
 	github.com/google/pprof v0.0.0-20211214055906-6f57359322fd // indirect
 	github.com/google/uuid v1.3.0 // indirect
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.15.0 // indirect
-	github.com/jmoiron/sqlx v1.3.5 // indirect
 	github.com/josharian/intern v1.0.0 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
 	github.com/lib/pq v1.10.9 // indirect

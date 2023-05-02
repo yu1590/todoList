@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package todoList;
+
+option go_package = "./todoList";
+
+message getTodoListReq {
+  int64 accountID = 1;
+  repeated int64 months = 2;
+}
+
+message getTodoListResp {
+  bool ok = 1;
+  repeated TodoList todoList = 2;
+}
+
+message TodoList {
+  int64  Id = 1;
+  int64 AccountId = 2;
+  int64 Time = 3;
+  int64 Month = 4;
+  string  Extra = 5;
+  int64 Status = 6;
+}
+
+service adder {
+  rpc getTodoList(getTodoListReq) returns(getTodoListResp);
+}

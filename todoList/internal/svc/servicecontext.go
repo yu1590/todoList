@@ -2,7 +2,7 @@ package svc
 
 import (
 	"example.com/m/v2/model"
-	"example.com/m/v2/rpc/internal/config"
+	"example.com/m/v2/todoList/internal/config"
 	"github.com/zeromicro/go-zero/core/stores/sqlx"
 )
 

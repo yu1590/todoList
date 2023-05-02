@@ -1,29 +1,39 @@
 type (
-	addReq {
+	getTodoListReq {
 		AccountID int64   `form:"account_id"`
 		Months    []int64 `form:"months"`
 	}
 
-	addResp {
-		Ok bool `json:"ok"`
+	getTodoListResp {
+		TodoList []*TodoList `json:"todoList"`
+		Ok       bool        `json:"ok"`
+	}
+
+	TodoList {
+		Id        int64  `json:"id"`        // 主键 id
+		AccountId int64  `json:"accountId"` // 账户 id
+		Time      int64  `json:"time"`      // 日程时间
+		Month     int64  `json:"month"`     // 月份
+		Extra     string `json:"extra"`     // 日程详细信息
+		Status    int64  `json:"status"`    // 状态 0:未完成 1:已完成
 	}
 )
 
 type (
-	checkReq {
-		Book string `form:"book"`
+	saveTodoListReq {
+		Time  int64  `form:"time"`
+		Extra string `form:"extra"`
 	}
 
-	checkResp {
-		Found bool  `json:"found"`
-		Price int64 `json:"price"`
+	saveTodoListResp {
+		Ok bool `json:"ok"`
 	}
 )
 
 service bookstore-api {
-	@handler AddHandler
-	get /add (addReq) returns (addResp)
+	@handler GetTodoListHandler
+	get /getTodoList (getTodoListReq) returns (getTodoListResp)
 	
-	@handler CheckHandler
-	get /check (checkReq) returns (checkResp)
+	@handler SaveTodoListHandler
+	post /saveTodoList (saveTodoListReq) returns (saveTodoListResp)
 }

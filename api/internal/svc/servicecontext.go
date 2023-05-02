@@ -2,7 +2,7 @@ package svc
 
 import (
 	"example.com/m/v2/api/internal/config"
-	"example.com/m/v2/rpc/adder"
+	"example.com/m/v2/todoList/adder"
 	"github.com/zeromicro/go-zero/zrpc"
 )
 

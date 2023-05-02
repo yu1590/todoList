@@ -9,21 +9,21 @@ import (
 	"github.com/zeromicro/go-zero/core/logx"
 )
 
-type CheckLogic struct {
+type SaveTodoListLogic struct {
 	logx.Logger
 	ctx    context.Context
 	svcCtx *svc.ServiceContext
 }
 
-func NewCheckLogic(ctx context.Context, svcCtx *svc.ServiceContext) *CheckLogic {
-	return &CheckLogic{
+func NewSaveTodoListLogic(ctx context.Context, svcCtx *svc.ServiceContext) *SaveTodoListLogic {
+	return &SaveTodoListLogic{
 		Logger: logx.WithContext(ctx),
 		ctx:    ctx,
 		svcCtx: svcCtx,
 	}
 }
 
-func (l *CheckLogic) Check(req *types.CheckReq) (resp *types.CheckResp, err error) {
+func (l *SaveTodoListLogic) SaveTodoList(req *types.SaveTodoListReq) (resp *types.SaveTodoListResp, err error) {
 	// todo: add your logic here and delete this line
 
 	return

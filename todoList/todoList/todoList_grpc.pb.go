@@ -2,9 +2,9 @@
 // versions:
 // - protoc-gen-go-grpc v1.3.0
 // - protoc             v3.19.4
-// source: add.proto
+// source: todoList.proto
 
-package add
+package todoList
 
 import (
 	context "context"
@@ -19,14 +19,14 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	Adder_GetTodoList_FullMethodName = "/add.adder/getTodoList"
+	Adder_GetTodoList_FullMethodName = "/todoList.adder/getTodoList"
 )
 
 // AdderClient is the client API for Adder service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type AdderClient interface {
-	GetTodoList(ctx context.Context, in *AddReq, opts ...grpc.CallOption) (*AddResp, error)
+	GetTodoList(ctx context.Context, in *GetTodoListReq, opts ...grpc.CallOption) (*GetTodoListResp, error)
 }
 
 type adderClient struct {
@@ -37,8 +37,8 @@ func NewAdderClient(cc grpc.ClientConnInterface) AdderClient {
 	return &adderClient{cc}
 }
 
-func (c *adderClient) GetTodoList(ctx context.Context, in *AddReq, opts ...grpc.CallOption) (*AddResp, error) {
-	out := new(AddResp)
+func (c *adderClient) GetTodoList(ctx context.Context, in *GetTodoListReq, opts ...grpc.CallOption) (*GetTodoListResp, error) {
+	out := new(GetTodoListResp)
 	err := c.cc.Invoke(ctx, Adder_GetTodoList_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -50,7 +50,7 @@ func (c *adderClient) GetTodoList(ctx context.Context, in *AddReq, opts ...grpc.
 // All implementations must embed UnimplementedAdderServer
 // for forward compatibility
 type AdderServer interface {
-	GetTodoList(context.Context, *AddReq) (*AddResp, error)
+	GetTodoList(context.Context, *GetTodoListReq) (*GetTodoListResp, error)
 	mustEmbedUnimplementedAdderServer()
 }
 
@@ -58,7 +58,7 @@ type AdderServer interface {
 type UnimplementedAdderServer struct {
 }
 
-func (UnimplementedAdderServer) GetTodoList(context.Context, *AddReq) (*AddResp, error) {
+func (UnimplementedAdderServer) GetTodoList(context.Context, *GetTodoListReq) (*GetTodoListResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetTodoList not implemented")
 }
 func (UnimplementedAdderServer) mustEmbedUnimplementedAdderServer() {}
@@ -75,7 +75,7 @@ func RegisterAdderServer(s grpc.ServiceRegistrar, srv AdderServer) {
 }
 
 func _Adder_GetTodoList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(AddReq)
+	in := new(GetTodoListReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -87,7 +87,7 @@ func _Adder_GetTodoList_Handler(srv interface{}, ctx context.Context, dec func(i
 		FullMethod: Adder_GetTodoList_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AdderServer).GetTodoList(ctx, req.(*AddReq))
+		return srv.(AdderServer).GetTodoList(ctx, req.(*GetTodoListReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -96,7 +96,7 @@ func _Adder_GetTodoList_Handler(srv interface{}, ctx context.Context, dec func(i
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var Adder_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "add.adder",
+	ServiceName: "todoList.adder",
 	HandlerType: (*AdderServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
@@ -105,5 +105,5 @@ var Adder_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "add.proto",
+	Metadata: "todoList.proto",
 }
