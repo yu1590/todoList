@@ -40,6 +40,9 @@ func (l *GetTodoListLogic) GetTodoList(in *todoList.GetTodoListReq) (*todoList.G
 		resp.Ok = false
 		return resp, err
 	}
+	for i, t := range todo {
+		resp.TodoList[i].Time = t.Time.Unix()
+	}
 
 	return resp, nil
 }
