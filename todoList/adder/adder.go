@@ -13,12 +13,15 @@ import (
 )
 
 type (
-	GetTodoListReq  = todoList.GetTodoListReq
-	GetTodoListResp = todoList.GetTodoListResp
-	TodoList        = todoList.TodoList
+	GetTodoListReq   = todoList.GetTodoListReq
+	GetTodoListResp  = todoList.GetTodoListResp
+	SaveTodoListReq  = todoList.SaveTodoListReq
+	SaveTodoListResp = todoList.SaveTodoListResp
+	TodoList         = todoList.TodoList
 
 	Adder interface {
 		GetTodoList(ctx context.Context, in *GetTodoListReq, opts ...grpc.CallOption) (*GetTodoListResp, error)
+		SaveTodoList(ctx context.Context, in *SaveTodoListReq, opts ...grpc.CallOption) (*SaveTodoListResp, error)
 	}
 
 	defaultAdder struct {
@@ -35,4 +38,9 @@ func NewAdder(cli zrpc.Client) Adder {
 func (m *defaultAdder) GetTodoList(ctx context.Context, in *GetTodoListReq, opts ...grpc.CallOption) (*GetTodoListResp, error) {
 	client := todoList.NewAdderClient(m.cli.Conn())
 	return client.GetTodoList(ctx, in, opts...)
+}
+
+func (m *defaultAdder) SaveTodoList(ctx context.Context, in *SaveTodoListReq, opts ...grpc.CallOption) (*SaveTodoListResp, error) {
+	client := todoList.NewAdderClient(m.cli.Conn())
+	return client.SaveTodoList(ctx, in, opts...)
 }

@@ -13,6 +13,14 @@ message getTodoListResp {
   bool ok = 1;
   repeated TodoList todoList = 2;
 }
+message saveTodoListReq {
+  int64 accountID = 1;
+  repeated TodoList todoList = 2;
+}
+
+message saveTodoListResp {
+  bool ok = 1;
+}
 
 message TodoList {
   int64  Id = 1;
@@ -25,4 +33,5 @@ message TodoList {
 
 service adder {
   rpc getTodoList(getTodoListReq) returns(getTodoListResp);
+  rpc saveTodoList(saveTodoListReq) returns(saveTodoListResp);
 }

@@ -19,7 +19,8 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	Adder_GetTodoList_FullMethodName = "/todoList.adder/getTodoList"
+	Adder_GetTodoList_FullMethodName  = "/todoList.adder/getTodoList"
+	Adder_SaveTodoList_FullMethodName = "/todoList.adder/saveTodoList"
 )
 
 // AdderClient is the client API for Adder service.
@@ -27,6 +28,7 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type AdderClient interface {
 	GetTodoList(ctx context.Context, in *GetTodoListReq, opts ...grpc.CallOption) (*GetTodoListResp, error)
+	SaveTodoList(ctx context.Context, in *SaveTodoListReq, opts ...grpc.CallOption) (*SaveTodoListResp, error)
 }
 
 type adderClient struct {
@@ -46,11 +48,21 @@ func (c *adderClient) GetTodoList(ctx context.Context, in *GetTodoListReq, opts 
 	return out, nil
 }
 
+func (c *adderClient) SaveTodoList(ctx context.Context, in *SaveTodoListReq, opts ...grpc.CallOption) (*SaveTodoListResp, error) {
+	out := new(SaveTodoListResp)
+	err := c.cc.Invoke(ctx, Adder_SaveTodoList_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AdderServer is the server API for Adder service.
 // All implementations must embed UnimplementedAdderServer
 // for forward compatibility
 type AdderServer interface {
 	GetTodoList(context.Context, *GetTodoListReq) (*GetTodoListResp, error)
+	SaveTodoList(context.Context, *SaveTodoListReq) (*SaveTodoListResp, error)
 	mustEmbedUnimplementedAdderServer()
 }
 
@@ -60,6 +72,9 @@ type UnimplementedAdderServer struct {
 
 func (UnimplementedAdderServer) GetTodoList(context.Context, *GetTodoListReq) (*GetTodoListResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetTodoList not implemented")
+}
+func (UnimplementedAdderServer) SaveTodoList(context.Context, *SaveTodoListReq) (*SaveTodoListResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SaveTodoList not implemented")
 }
 func (UnimplementedAdderServer) mustEmbedUnimplementedAdderServer() {}
 
@@ -92,6 +107,24 @@ func _Adder_GetTodoList_Handler(srv interface{}, ctx context.Context, dec func(i
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Adder_SaveTodoList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SaveTodoListReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdderServer).SaveTodoList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Adder_SaveTodoList_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdderServer).SaveTodoList(ctx, req.(*SaveTodoListReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Adder_ServiceDesc is the grpc.ServiceDesc for Adder service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -102,6 +135,10 @@ var Adder_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "getTodoList",
 			Handler:    _Adder_GetTodoList_Handler,
+		},
+		{
+			MethodName: "saveTodoList",
+			Handler:    _Adder_SaveTodoList_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
