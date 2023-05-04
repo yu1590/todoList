@@ -4,6 +4,7 @@ import (
 	"context"
 	"example.com/m/v2/model"
 	"github.com/jinzhu/copier"
+	"time"
 
 	"example.com/m/v2/todoList/internal/svc"
 	"example.com/m/v2/todoList/todoList"
@@ -31,6 +32,7 @@ func (l *SaveTodoListLogic) SaveTodoList(in *todoList.SaveTodoListReq) (*todoLis
 	for _, todo := range in.TodoList {
 		modelTodo := &model.TodoList{}
 		err := copier.Copy(modelTodo, todo)
+		modelTodo.Time = time.Unix(todo.Time, 0)
 		if err != nil {
 			logx.WithContext(l.ctx).Errorf("copier.Copy error: %v", err)
 			resp.Ok = false
