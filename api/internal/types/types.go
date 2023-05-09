@@ -11,6 +11,16 @@ type GetTodoListResp struct {
 	Ok       bool        `json:"ok"`
 }
 
+type SearchTodoListReq struct {
+	AccountID int64  `form:"account_id"`
+	Keyword   string `form:"keyword"`
+}
+
+type SearchTodoListResp struct {
+	TodoList []*TodoList `json:"todoList"`
+	Ok       bool        `json:"ok"`
+}
+
 type TodoList struct {
 	Id        int64  `json:"id"`        // 主键 id
 	AccountId int64  `json:"accountId"` // 账户 id

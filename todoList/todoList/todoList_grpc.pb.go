@@ -19,8 +19,9 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	Adder_GetTodoList_FullMethodName  = "/todoList.adder/getTodoList"
-	Adder_SaveTodoList_FullMethodName = "/todoList.adder/saveTodoList"
+	Adder_GetTodoList_FullMethodName    = "/todoList.adder/getTodoList"
+	Adder_SearchTodoList_FullMethodName = "/todoList.adder/searchTodoList"
+	Adder_SaveTodoList_FullMethodName   = "/todoList.adder/saveTodoList"
 )
 
 // AdderClient is the client API for Adder service.
@@ -28,6 +29,7 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type AdderClient interface {
 	GetTodoList(ctx context.Context, in *GetTodoListReq, opts ...grpc.CallOption) (*GetTodoListResp, error)
+	SearchTodoList(ctx context.Context, in *SearchTodoListReq, opts ...grpc.CallOption) (*SearchTodoListResp, error)
 	SaveTodoList(ctx context.Context, in *SaveTodoListReq, opts ...grpc.CallOption) (*SaveTodoListResp, error)
 }
 
@@ -48,6 +50,15 @@ func (c *adderClient) GetTodoList(ctx context.Context, in *GetTodoListReq, opts 
 	return out, nil
 }
 
+func (c *adderClient) SearchTodoList(ctx context.Context, in *SearchTodoListReq, opts ...grpc.CallOption) (*SearchTodoListResp, error) {
+	out := new(SearchTodoListResp)
+	err := c.cc.Invoke(ctx, Adder_SearchTodoList_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *adderClient) SaveTodoList(ctx context.Context, in *SaveTodoListReq, opts ...grpc.CallOption) (*SaveTodoListResp, error) {
 	out := new(SaveTodoListResp)
 	err := c.cc.Invoke(ctx, Adder_SaveTodoList_FullMethodName, in, out, opts...)
@@ -62,6 +73,7 @@ func (c *adderClient) SaveTodoList(ctx context.Context, in *SaveTodoListReq, opt
 // for forward compatibility
 type AdderServer interface {
 	GetTodoList(context.Context, *GetTodoListReq) (*GetTodoListResp, error)
+	SearchTodoList(context.Context, *SearchTodoListReq) (*SearchTodoListResp, error)
 	SaveTodoList(context.Context, *SaveTodoListReq) (*SaveTodoListResp, error)
 	mustEmbedUnimplementedAdderServer()
 }
@@ -72,6 +84,9 @@ type UnimplementedAdderServer struct {
 
 func (UnimplementedAdderServer) GetTodoList(context.Context, *GetTodoListReq) (*GetTodoListResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetTodoList not implemented")
+}
+func (UnimplementedAdderServer) SearchTodoList(context.Context, *SearchTodoListReq) (*SearchTodoListResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SearchTodoList not implemented")
 }
 func (UnimplementedAdderServer) SaveTodoList(context.Context, *SaveTodoListReq) (*SaveTodoListResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SaveTodoList not implemented")
@@ -107,6 +122,24 @@ func _Adder_GetTodoList_Handler(srv interface{}, ctx context.Context, dec func(i
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Adder_SearchTodoList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SearchTodoListReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdderServer).SearchTodoList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Adder_SearchTodoList_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdderServer).SearchTodoList(ctx, req.(*SearchTodoListReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Adder_SaveTodoList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(SaveTodoListReq)
 	if err := dec(in); err != nil {
@@ -135,6 +168,10 @@ var Adder_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "getTodoList",
 			Handler:    _Adder_GetTodoList_Handler,
+		},
+		{
+			MethodName: "searchTodoList",
+			Handler:    _Adder_SearchTodoList_Handler,
 		},
 		{
 			MethodName: "saveTodoList",

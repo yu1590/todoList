@@ -13,14 +13,17 @@ import (
 )
 
 type (
-	GetTodoListReq   = todoList.GetTodoListReq
-	GetTodoListResp  = todoList.GetTodoListResp
-	SaveTodoListReq  = todoList.SaveTodoListReq
-	SaveTodoListResp = todoList.SaveTodoListResp
-	TodoList         = todoList.TodoList
+	GetTodoListReq     = todoList.GetTodoListReq
+	GetTodoListResp    = todoList.GetTodoListResp
+	SaveTodoListReq    = todoList.SaveTodoListReq
+	SaveTodoListResp   = todoList.SaveTodoListResp
+	SearchTodoListReq  = todoList.SearchTodoListReq
+	SearchTodoListResp = todoList.SearchTodoListResp
+	TodoList           = todoList.TodoList
 
 	Adder interface {
 		GetTodoList(ctx context.Context, in *GetTodoListReq, opts ...grpc.CallOption) (*GetTodoListResp, error)
+		SearchTodoList(ctx context.Context, in *SearchTodoListReq, opts ...grpc.CallOption) (*SearchTodoListResp, error)
 		SaveTodoList(ctx context.Context, in *SaveTodoListReq, opts ...grpc.CallOption) (*SaveTodoListResp, error)
 	}
 
@@ -38,6 +41,11 @@ func NewAdder(cli zrpc.Client) Adder {
 func (m *defaultAdder) GetTodoList(ctx context.Context, in *GetTodoListReq, opts ...grpc.CallOption) (*GetTodoListResp, error) {
 	client := todoList.NewAdderClient(m.cli.Conn())
 	return client.GetTodoList(ctx, in, opts...)
+}
+
+func (m *defaultAdder) SearchTodoList(ctx context.Context, in *SearchTodoListReq, opts ...grpc.CallOption) (*SearchTodoListResp, error) {
+	client := todoList.NewAdderClient(m.cli.Conn())
+	return client.SearchTodoList(ctx, in, opts...)
 }
 
 func (m *defaultAdder) SaveTodoList(ctx context.Context, in *SaveTodoListReq, opts ...grpc.CallOption) (*SaveTodoListResp, error) {

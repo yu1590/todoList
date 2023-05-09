@@ -27,6 +27,7 @@ func NewSaveTodoListLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Save
 
 func (l *SaveTodoListLogic) SaveTodoList(req *types.SaveTodoListReq) (resp *types.SaveTodoListResp, err error) {
 	// todo: add your logic here and delete this line
+	logx.WithContext(l.ctx).Infof("param : %v", req)
 	resp = &types.SaveTodoListResp{
 		Ok: true,
 	}

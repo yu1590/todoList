@@ -18,6 +18,11 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Handler: GetTodoListHandler(serverCtx),
 			},
 			{
+				Method:  http.MethodGet,
+				Path:    "/searchTodoList",
+				Handler: SearchTodoListHandler(serverCtx),
+			},
+			{
 				Method:  http.MethodPost,
 				Path:    "/saveTodoList",
 				Handler: SaveTodoListHandler(serverCtx),

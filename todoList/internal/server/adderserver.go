@@ -27,6 +27,11 @@ func (s *AdderServer) GetTodoList(ctx context.Context, in *todoList.GetTodoListR
 	return l.GetTodoList(in)
 }
 
+func (s *AdderServer) SearchTodoList(ctx context.Context, in *todoList.SearchTodoListReq) (*todoList.SearchTodoListResp, error) {
+	l := logic.NewSearchTodoListLogic(ctx, s.svcCtx)
+	return l.SearchTodoList(in)
+}
+
 func (s *AdderServer) SaveTodoList(ctx context.Context, in *todoList.SaveTodoListReq) (*todoList.SaveTodoListResp, error) {
 	l := logic.NewSaveTodoListLogic(ctx, s.svcCtx)
 	return l.SaveTodoList(in)

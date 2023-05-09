@@ -9,6 +9,16 @@ type (
 		Ok       bool        `json:"ok"`
 	}
 
+	searchTodoListReq {
+		AccountID int64  `form:"account_id"`
+		Keyword   string `form:"keyword"`
+	}
+
+	searchTodoListResp {
+		TodoList []*TodoList `json:"todoList"`
+		Ok       bool        `json:"ok"`
+	}
+
 	TodoList {
 		Id        int64  `json:"id"`        // 主键 id
 		AccountId int64  `json:"accountId"` // 账户 id
@@ -33,6 +43,9 @@ type (
 service bookstore-api {
 	@handler GetTodoListHandler
 	get /getTodoList (getTodoListReq) returns (getTodoListResp)
+	
+	@handler SearchTodoListHandler
+	get /searchTodoList (searchTodoListReq) returns (searchTodoListResp)
 	
 	@handler SaveTodoListHandler
 	post /saveTodoList (saveTodoListReq) returns (saveTodoListResp)
