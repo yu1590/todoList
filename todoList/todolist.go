@@ -1,6 +1,7 @@
 package main
 
 import (
+	"example.com/m/v2/todoList/internal/infra"
 	"flag"
 	"fmt"
 
@@ -24,6 +25,8 @@ func main() {
 	var c config.Config
 	conf.MustLoad(*configFile, &c)
 	ctx := svc.NewServiceContext(c)
+
+	infra.InitES()
 
 	s := zrpc.MustNewServer(c.RpcServerConf, func(grpcServer *grpc.Server) {
 		todoList.RegisterAdderServer(grpcServer, server.NewAdderServer(ctx))

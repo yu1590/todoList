@@ -3,8 +3,10 @@ module example.com/m/v2
 go 1.19
 
 require (
+	github.com/elastic/go-elasticsearch/v7 v7.17.10
 	github.com/jinzhu/copier v0.3.5
 	github.com/jmoiron/sqlx v1.3.5
+	github.com/olivere/elastic/v7 v7.0.32
 	github.com/zeromicro/go-zero v1.5.2
 	google.golang.org/grpc v1.54.0
 	google.golang.org/protobuf v1.30.0
@@ -50,6 +52,7 @@ require (
 	github.com/munnerz/goautoneg v0.0.0-20191010083416-a7dc8b61c822 // indirect
 	github.com/openzipkin/zipkin-go v0.4.1 // indirect
 	github.com/pelletier/go-toml/v2 v2.0.7 // indirect
+	github.com/pkg/errors v0.9.1 // indirect
 	github.com/prometheus/client_golang v1.15.0 // indirect
 	github.com/prometheus/client_model v0.3.0 // indirect
 	github.com/prometheus/common v0.42.0 // indirect
